@@ -2,6 +2,19 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Getting started
+
+### `nvm use`
+
+Install [nvm - Node Version Manager](https://github.com/nvm-sh/nvm)
+If using Homebrew on mac https://brew.sh/ run `brew install nvm`
+
+### `yarn install`
+
+Before you start using Yarn, you'll first need to install it on your system. There are many different ways to install Yarn, but a single one is recommended and cross-platform:
+
+`yarn install` is used to install all dependencies for a project. This is most commonly used when you have just checked out code for a project, or when another developer on the project has added a new dependency that you need to pick up.
+
 ## Available Scripts
 
 In the project directory, you can run:
