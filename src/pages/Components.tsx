@@ -1,6 +1,3 @@
-// Core
-import Layout from "../component/Layout/Layout";
-
 // Components
 import Heading from "../component/Basic/Heading";
 import { List, ListItem } from "../component/Basic/List";
