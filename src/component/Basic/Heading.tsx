@@ -48,9 +48,9 @@ const defaultProps: Age = {
 // T is now a placeholder for the type we wish to pass into identity, and is assigned to arg
 // in place of its type: instead of number, T is now acting as the type.
 
-function identity<T>(arg: T): T {
-  return arg;
-}
+// function identity<T>(arg: T): T {
+//   return arg;
+// }
 
 const Heading = ({ message, name, age, alignment }: AllProps): JSX.Element => {
   
@@ -64,7 +64,7 @@ const Heading = ({ message, name, age, alignment }: AllProps): JSX.Element => {
   // Type Assertions
   // -------------
 
-  const myCanvas = document.getElementById("main_canvas") as HTMLCanvasElement;
+  // const myCanvas = document.getElementById("main_canvas") as HTMLCanvasElement;
 
   return (
     <div className="py-2">

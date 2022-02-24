@@ -1,34 +1,22 @@
 // Core
 import Layout from "./component/Layout/Layout";
+import { Route, Routes } from "react-router";
+import { Link, BrowserRouter } from "react-router-dom";
 
-// Components
-import Heading from "./component/Basic/Heading";
-import { List, ListItem } from "./component/Basic/List";
-import Card from "./component/Basic/Card";
+import Components from "./pages/Components";
+import Navbar from "./component/Navbar/Navbar";
 
 function App() {
   return (
     <Layout>
-      {/* Component */}
-      <Heading
-        message="Hello World!"
-        name="Jimmy Shoes"
-        age={23}
-        alignment="top"
-      />
-      {/* Component */}
-      <List>
-        <ListItem heading="Heading 1" summary="Summary 1" />
-        <ListItem heading="Heading 2" />
-      </List>
-      {/* Component */}
-      <Card
-        title="Title"
-        subtitle="Sub Title"
-        mediaAlt="Lorem Ipsom"
-        mediaSrc="https://picsum.photos/200/300"
-        url="/"
-      />
+      <h1>App</h1>
+      <hr />
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/components" element={<Components />} />
+        </Routes>
+      </BrowserRouter>
     </Layout>
   );
 }
