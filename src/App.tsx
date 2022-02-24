@@ -4,13 +4,11 @@ import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 
 import Components from "./pages/Components";
-import Navbar from "./component/Navbar/Navbar";
+import Navbar from "./component/Layout/Navbar";
 
 function App() {
   return (
     <Layout>
-      <h1>App</h1>
-      <hr />
       <BrowserRouter>
         <Navbar />
         <Routes>

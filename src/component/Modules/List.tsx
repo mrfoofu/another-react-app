@@ -9,14 +9,16 @@ interface Props {
 }
 
 const List = ({ children }: { children: React.ReactNode }): JSX.Element => {
-  return <ul className="py-2">{children}</ul>;
+  return <ol className="list-decimal prose prose-base px-4 my-4">{children}</ol>;
 };
 
 const ListItem = ({ heading, summary }: Props): JSX.Element => {
   return (
     <li>
-      <h2>{heading}</h2>
-      {summary && <p>{summary}</p>}
+      <div className="not-prose flex flex-col shrink-0 mb-1">
+        <h2 className="">{heading}</h2>
+        {summary && <p>{summary}</p>}
+      </div>
     </li>
   );
 };

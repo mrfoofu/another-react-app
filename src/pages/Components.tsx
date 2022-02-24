@@ -1,7 +1,8 @@
 // Components
-import Heading from "../component/Basic/Heading";
-import { List, ListItem } from "../component/Basic/List";
-import Card from "../component/Basic/Card";
+import Heading from "../component/Modules/Heading";
+import { List, ListItem } from "../component/Modules/List";
+import Card from "../component/Modules/Card";
+import AxiosExample from "../component/Functions/Axios";
 
 const Components = () =>{
 
@@ -18,7 +19,7 @@ const Components = () =>{
       {/* Component */}
       <List>
         <ListItem heading="Heading 1" summary="Summary 1" />
-        <ListItem heading="Heading 2" />
+        <ListItem heading="Heading 2" summary="Summary 2" />
       </List>
       <hr />
       {/* Component */}
@@ -26,10 +27,11 @@ const Components = () =>{
         title="Title"
         subtitle="Sub Title"
         mediaAlt="Lorem Ipsom"
-        mediaSrc="https://picsum.photos/200/300"
+        mediaSrc="https://picsum.photos/500/200"
         url="/"
       />
       <hr />
+      <AxiosExample />
     </>
   );
 }

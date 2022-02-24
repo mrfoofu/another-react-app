@@ -58,7 +58,8 @@ const Heading = ({ message, name, age, alignment }: AllProps): JSX.Element => {
   // Type Annotations on Variables
   // -------------
 
-  let author: string = "Author";
+  let authorLabel: string = "Author";
+  let ageLabel: string = "Age";
 
   // -------------
   // Type Assertions
@@ -68,12 +69,13 @@ const Heading = ({ message, name, age, alignment }: AllProps): JSX.Element => {
 
   return (
     <div className="py-2">
-      <h1 className={`text-3xl font-bold underline align-${alignment}`}>
+      <h1 className={`text-4xl align-${alignment} mb-3 mt-5`}>
         {message}
       </h1>
       {(name || age) && (
-        <small>
-          {author}: {name} {age}
+        <small className="italic">
+          {authorLabel}: {name} <br />
+          {ageLabel}: {age}
         </small>
       )}
     </div>

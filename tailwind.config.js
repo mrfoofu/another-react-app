@@ -25,10 +25,19 @@ module.exports = {
       'gray-dark': '#273444',
       'gray': '#8492a6',
       'gray-light': '#d3dce6',
+      'white': '#ffffff',
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
       serif: ['Merriweather', 'serif'],
+    },
+    spacing: {
+      '1': '8px',
+      '2': '12px',
+      '3': '16px',
+      '4': '24px',
+      '5': '32px',
+      '6': '48px',
     },
     extend: {
       spacing: {
@@ -40,5 +49,7 @@ module.exports = {
       }
     }
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
