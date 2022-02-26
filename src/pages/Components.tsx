@@ -4,6 +4,7 @@ import { List, ListItem } from "../component/Modules/List";
 import Card from "../component/Modules/Card";
 import AxiosExample from "../component/Functions/Axios";
 
+
 const Components = () =>{
 
   return (
@@ -32,6 +33,7 @@ const Components = () =>{
       />
       <hr />
       <AxiosExample />
+      
     </>
   );
 }

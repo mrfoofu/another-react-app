@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import Components from "./pages/Components";
 import Navbar from "./component/Layout/Navbar";
 
+import Exam from "./component/Functions/Exam";
+
 function App() {
   return (
     <Layout>
@@ -15,6 +17,7 @@ function App() {
           <Route path="/components" element={<Components />} />
         </Routes>
       </BrowserRouter>
+      <Exam />
     </Layout>
   );
 }
