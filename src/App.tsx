@@ -4,9 +4,8 @@ import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 
 import Components from "./pages/Components";
+import Code from "./pages/Code";
 import Navbar from "./component/Layout/Navbar";
-
-import Exam from "./component/Functions/Exam";
 
 function App() {
   return (
@@ -15,9 +14,10 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/components" element={<Components />} />
+          <Route path="/code" element={<Code />} />
         </Routes>
       </BrowserRouter>
-      <Exam />
+      <h1 className="py-3 font-bold sm:py-4 md:py-5 text-5xl">Nothing here</h1>
     </Layout>
   );
 }

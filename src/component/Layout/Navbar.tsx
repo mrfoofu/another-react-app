@@ -17,11 +17,15 @@ const resourcesItems: Props[] = [
     label: "Modules",
     link: "/components"
   },
+  {
+    label: "Code Samples",
+    link: "/code"
+  },
 ];
 
 const Navbar = (): JSX.Element => {
   return (
-    <ul className="flex flex-row justify-center">
+    <ul className="flex flex-row justify-center my-4">
       {resourcesItems.map((item: Props, index: number) => (
         <NavbarItem
           key={`navitem-${index}`}

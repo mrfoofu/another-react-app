@@ -171,7 +171,6 @@ const Exam = (): JSX.Element => {
 
   return (
     <div className="prose">
-      <h2>Items</h2>
       {loading ? <Loader /> : <List items={results} />}
       {error && <Error />}
     </div>
