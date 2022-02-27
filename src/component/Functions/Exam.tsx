@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 
+/**
+ * Object Sample Shape
+ */
+
 const backendData: Array<ParentProps> = [
   {
     id: "1",
@@ -128,6 +132,13 @@ const Exam = (): JSX.Element => {
   const loadData = async () => {
     setLoading(true);
 
+    // -------------
+    // async and await
+    // -------------
+
+    // async and await are keywords which make synchronous-looking code asynchronous.
+    // We use async when defining a function to signify that it returns a Promise. 
+
     try {
       const response: any = await fetchData();
       
@@ -139,6 +150,23 @@ const Exam = (): JSX.Element => {
       setLoading(false);
       setError(true);
     }
+
+    // -------------
+    // then, catch And finally
+    // -------------
+
+    // then and catch and finally are methods of the Promise object, and they are chained one after the other.
+    // Each takes a callback function as its argument and returns a Promise.
+
+    // fetchData()
+    //   .then((value: any) => {
+    //     setLoading(false);
+    //     setResults(value);
+    //   })
+    //   .catch((err: unknown) => {
+    //     setError(true);
+    //     setLoading(false);
+    //   });
   };
 
   return (
