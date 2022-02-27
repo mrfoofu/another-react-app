@@ -63,54 +63,99 @@ const backendData: Array<ParentProps> = [
   },
 ];
 
+/**
+ * Fetch Object Data
+ */
+
 function fetchData() {
   return new Promise((resolve) => {
     setTimeout(resolve, 100, backendData);
   });
 }
 
+/**
+ * 
+ * Check Data is Present
+ * @param  {Object} input The data that is returned from the promise
+ * 
+ */
+
+function checkData(input: ParentProps): unknown {
+  // Checking for
+  // 1. It's an object
+  // 2. It's not null
+  // 3. It's not an empty array
+  if (typeof input === "object" && input !== null && Object.entries(input).length) {
+    return true;
+  }
+  throw "Nothing came back";
+}
+
+// -------------
+// TypeChecking
+// -------------
+
 interface MyGroupType {
+  // -------------
+  // Index Signatures
+  // -------------
+
+  // Sometimes you don’t know all the names of a type’s properties ahead of time, but you do know the shape of the values.
+  // In those cases you can use an index signature to describe the types of possible values, for example:
   [key: string]: ParentProps;
 }
 
 interface ParentProps {
   id: string | number;
   name: string;
+
+  // -------------
+  // Generic array type
+  // -------------
+  // could also use ParentProps[]
   children?: Array<ParentProps>;
 }
 
 const Exam = (): JSX.Element => {
   const [results, setResults] = useState<ParentProps>({} as ParentProps);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    setLoading(true);
-
-    fetchData()
-      .then((value: any) => {
-        setResults(value);
-        setLoading(false);
-      })
-      .catch((err: unknown) => {
-        console.log(err);
-        setLoading(false);
-      });
+    loadData();
   }, []);
 
+  const loadData = async () => {
+    setLoading(true);
+
+    try {
+      const response: any = await fetchData();
+      
+      if (checkData(response)) {
+        setLoading(false);
+        setResults(response);
+      }
+    } catch (err: any) {
+      setLoading(false);
+      setError(true);
+    }
+  };
+
   return (
-    <>
-      <div className="prose">
-        <h2>Items</h2>
-        {loading ? <Loader /> : <List items={results} />}
-      </div>
-    </>
+    <div className="prose">
+      <h2>Items</h2>
+      {loading ? <Loader /> : <List items={results} />}
+      {error && <Error />}
+    </div>
   );
 };
 
+const Error = (): JSX.Element => {
+  return <div>Error...</div>;
+};
+
 const Loader = (): JSX.Element => {
-  return (
-    <div>Loading...</div>
-  );
+  return <div>Loading...</div>;
 };
 
 const List = ({ items }: MyGroupType): JSX.Element => {
@@ -121,7 +166,9 @@ const List = ({ items }: MyGroupType): JSX.Element => {
           <li key={`item_${index}`}>
             {item.children && "🔻"}
             {item.name}
-            {item.children && <List items={item.children} />}
+            {item.children && checkData(item.children) && (
+              <List items={item.children} />
+            )}
           </li>
         ))}
     </ul>
