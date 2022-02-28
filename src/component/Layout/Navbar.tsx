@@ -18,7 +18,7 @@ const resourcesItems: Props[] = [
     link: "/components"
   },
   {
-    label: "Code Samples",
+    label: "Code",
     link: "/code"
   },
 ];
