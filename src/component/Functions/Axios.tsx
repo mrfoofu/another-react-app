@@ -30,13 +30,13 @@ const AxiosExample = () => {
 
   return (
     <div>
-      {results ? <ShowResults items={results} /> : <ShowError />} 
+      {results ? <ShowResults items={results} /> : <ShowError error={error}/>} 
     </div>
   );
 };
 
-const ShowError = () => {
-  return <div>Error</div>;
+const ShowError = (error: { error: string | null; }) => {
+  return <div>{error}</div>;
 };
 
 const ShowResults = ({ items }: any): JSX.Element => {
@@ -54,3 +54,41 @@ const ShowResults = ({ items }: any): JSX.Element => {
 };
 
 export default AxiosExample;
+
+// -----
+// Using then/catch
+// https://javascript.info/async-await
+// -----
+
+// function loadJson(url) {
+//   return fetch(url)
+//     .then(response => {
+//       if (response.status == 200) {
+//         return response.json();
+//       } else {
+//         throw new Error(response.status);
+//       }
+//     });
+// }
+
+// loadJson('https://javascript.info/no-such-user.json')
+//   .catch(alert); // Error: 404
+
+// -----
+// Using <async />
+// https://javascript.info/async-await
+// -----
+
+// async function loadJson(url) { // (1)
+//   let response = await fetch(url); // (2)
+
+//   if (response.status == 200) {
+//     let json = await response.json(); // (3)
+//     return json;
+//   }
+
+//   throw new Error(response.status);
+// }
+
+// loadJson('https://javascript.info/no-such-user.json')
+//   .catch(alert); // Error: 404 (4)

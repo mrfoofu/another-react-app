@@ -1,18 +1,30 @@
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useLayoutEffect,
+  useCallback,
+  useMemo,
+  useReducer,
+} from "react";
 import { useForm } from "./useForm";
 import { useFetch } from "./useFetch";
+import { HelloCallBack } from "./useCallback";
 
+// -------------
+// Types
+// -------------
 interface PropsCount {
   count: number;
   count2: number;
 }
 
 const Hooks = () => {
-  
+
   // -------------
   // useStates
   // -------------
-
+  
   const [{ count, count2 }, setCount] = useState<PropsCount>({
     count: JSON.parse(localStorage.getItem("count") || "{}"),
     count2: 20,
@@ -23,7 +35,14 @@ const Hooks = () => {
   const [values, handleChange] = useForm({ email: "", password: "" });
   const { data, loading } = useFetch(`http://numbersapi.com/${count}/trivia`);
 
+  // For useLayoutEffect example
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // For callback example
+  const [foo, setFoo] = useState(0);
+
+  // For reducer example
+  const [text, setText] = useState<string>("");
 
   // -------------
   // useRef
@@ -70,7 +89,7 @@ const Hooks = () => {
 
   useEffect(() => {
     const onMouseMove = (e: Event) => {
-      console.log(e);
+      // console.log(e);
     };
     window.addEventListener("mousemove", onMouseMove);
 
@@ -92,7 +111,7 @@ const Hooks = () => {
   // Runs on every render
   //
   useEffect(() => {
-    console.log("Mount 1");
+    console.log("Mount - On each re-render");
   });
 
   // 2. An empty array:
@@ -100,8 +119,9 @@ const Hooks = () => {
   // Equivalent of componentDidMount()
   // Runs only on the first render
   //
+
   useEffect(() => {
-    console.log("Mount 2");
+    console.log("Mount 2 - Runs once on first render");
   }, []); // Mark [] here.
 
   // 3. Props or state values:
@@ -109,8 +129,9 @@ const Hooks = () => {
   // Runs on the first render
   // And any time any dependency value changes
   //
+
   useEffect(() => {
-    console.log("Mount 3");
+    console.log("Mount 3 - Runs when depedancy of values changes");
   }, [values]);
 
   // 4. Props or state values:
@@ -118,11 +139,155 @@ const Hooks = () => {
   // Equivalent of componentWillUnmount
   // Return statement inside of the useEffect function body
   //
+
   useEffect(() => {
     return () => {
-      console.log("Mount 4");
+      console.log("UnMount 4 - When it unmounts");
     };
   }, []);
+
+  // -------------
+  // useCallback
+  // -------------
+  // useCallback will return a memoized version of the callback that only changes if one of the dependencies has changed.
+
+  const increment = useCallback(
+    (n: number) => {
+      setFoo((c) => c + n);
+    },
+    [setFoo]
+  );
+
+  // const kayneData = ["Apples", "Bananas", "Chickens", "Homer", "Longest word might not be in here"];
+
+  const computeLongestWord = useCallback((arr) => {
+    if (!arr) {
+      return [];
+    }
+
+    console.log("Computing Longest Word");
+
+    let longestWord = "";
+
+    arr.split(" ").forEach((word: string) => {
+      if (word.length > longestWord.length) {
+        longestWord = word;
+      }
+    })
+
+    return longestWord;
+    // If you are not passing any depedencies if might mean
+    // you don't need useCallback and you can just move this outside
+    
+  }, []);
+
+  const longestWord = useMemo(
+    () => computeLongestWord(data),
+    [computeLongestWord, data]
+  );
+
+  // -------------
+  // useReducer
+  // -------------
+  // Returns a stateful value, and a function to update it.
+
+  interface reducerAction {
+    type: "increment" | "decrement";
+    count: 1;
+  }
+
+  interface countProps {
+    result: number;
+  }
+
+  const initialState1 = {
+    result: 1,
+  };
+
+  const countValue: number = 1;
+
+  const counterReducer = (state: countProps, action: reducerAction) => {
+    const { type, count } = action;
+    const { result } = state;
+
+    switch (type) {
+      case "increment":
+        return { result: result + count };
+      case "decrement":
+        return { result: result - count };
+
+      // If the action is unknown
+      // we return the current state:
+      default:
+        return 0;
+    }
+  };
+
+  // -------------
+  // useReducer
+  // -------------
+  // Returns a stateful value, and a function to update it.
+
+  interface Todo {
+    todos: Todos[];
+    todoCount: number;
+  }
+
+  interface Todos {
+    text: string;
+    completed: boolean;
+  }
+
+  type Actions = {
+    type: "add-todo" | "toggle-todo";
+    idx: number;
+    text: string;
+  };
+
+  const initialState2 = {
+    todos: [],
+    todoCount: 0
+  };
+
+  const todoReducer = (state: Todo, action: Actions) => {
+    const { type, text } = action;
+
+    switch (type) {
+      case "add-todo":
+        return {
+          todos: [
+            ...state.todos,
+            {
+              text: text,
+              completed: false,
+            },
+          ],
+          todoCount: state.todoCount + 1
+        };
+      case "toggle-todo":
+        return {
+          todos: state.todos.map((t: Todos, idx: number) =>
+            idx === action.idx ? { ...t, completed: !t.completed } : t
+          ),
+          todoCount: state.todoCount
+        };
+      default:
+        return state;
+    }
+  };
+
+  // useReducer takes 2 parameters:
+  // - the state reducer,
+  // - and an initial state.
+
+  // To update the state,
+  // we call the dispatch function
+  // and pass as an argument an according action:
+  const [state, dispatch]: any = useReducer<any>(counterReducer, initialState1);
+  const [{ todos, todoCount }, todoDispatch]: any = useReducer<any>(
+    todoReducer,
+    initialState2
+  );
 
   return (
     <div>
@@ -147,6 +312,7 @@ const Hooks = () => {
       >
         Increment 3 and 4
       </button>
+
       <h3 className="text-2xl py-3">Counter Output</h3>
       <div>
         <strong>count 1:</strong> {count}
@@ -160,6 +326,7 @@ const Hooks = () => {
       <div>
         <strong>count 4:</strong> {count4}
       </div>
+
       <h3 className="text-2xl py-3">Inputs</h3>
       <div>
         <input
@@ -182,14 +349,16 @@ const Hooks = () => {
           placeholder="password"
         />
       </div>
+
       <h3 className="text-2xl py-3">Data</h3>
       <blockquote
         ref={divRef}
         className="italic inline-block font-extralight p-5"
       >
-        {!data ? "Loading..." : `"${data}"`}
+        {!data ? loading : `"${data}"`}
       </blockquote>
       <pre>{JSON.stringify(rect, null, 2)}</pre>
+
       <h3 className="text-2xl py-3">Button</h3>
       <button
         className="bg-blue border p-2"
@@ -203,6 +372,57 @@ const Hooks = () => {
       >
         Focus using useRef
       </button>
+
+      <h3 className="text-2xl py-3">React.memo</h3>
+      <HelloCallBack increment={increment} />
+      <div>count: {foo}</div>
+      <div>longest word: {longestWord}</div>
+
+      <h3 className="text-2xl py-3">Reducer Basic</h3>
+      <div>Count: {state.result}</div>
+      <button
+        className="bg-blue border p-2"
+        onClick={() => dispatch({ type: "increment", count: countValue })}
+      >
+        +
+      </button>
+      <button
+        className="bg-blue border p-2"
+        onClick={() => dispatch({ type: "decrement", count: countValue })}
+      >
+        -
+      </button>
+      
+      <h3 className="text-2xl py-3">Reducer Form Todo</h3>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          todoDispatch({ type: "add-todo", text: text });
+          // Just so we can clear the input field
+          setText("");
+        }}
+      >
+        <input
+          type="text"
+          className="border"
+          value={text}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            setText(e.target.value);
+          }}
+        />
+      </form>
+      <div>Number of todos: {todoCount}</div>
+      {todos.map((t: Todos, idx: number) => (
+        <div
+          key={idx}
+          style={{ textDecoration: t.completed ? "line-through" : "" }}
+          onClick={() => {
+            todoDispatch({ type: "toggle-todo", idx });
+          }}
+        >
+          {t.text}
+        </div>
+      ))}
     </div>
   );
 };
