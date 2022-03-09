@@ -158,8 +158,6 @@ const Hooks = () => {
     [setFoo]
   );
 
-  // const kayneData = ["Apples", "Bananas", "Chickens", "Homer", "Longest word might not be in here"];
-
   const computeLongestWord = useCallback((arr) => {
     if (!arr) {
       return [];

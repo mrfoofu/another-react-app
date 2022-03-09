@@ -38,7 +38,6 @@ const Components = () =>{
       />
       <hr />
       <AxiosExample />
-      
     </>
   );
 }

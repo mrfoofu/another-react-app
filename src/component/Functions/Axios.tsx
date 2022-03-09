@@ -36,7 +36,7 @@ const AxiosExample = () => {
 };
 
 const ShowError = (error: { error: string | null; }) => {
-  return <div>{error}</div>;
+  return <div>{JSON.stringify(error)}</div>;
 };
 
 const ShowResults = ({ items }: any): JSX.Element => {

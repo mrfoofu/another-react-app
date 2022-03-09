@@ -78,10 +78,10 @@ function fetchData() {
 }
 
 /**
- * 
+ *
  * Check Data is Present
  * @param  {Object} input The data that is returned from the promise
- * 
+ *
  */
 
 function checkData(input: ParentProps): unknown {
@@ -89,10 +89,14 @@ function checkData(input: ParentProps): unknown {
   // 1. It's an object
   // 2. It's not null
   // 3. It's not an empty array
-  if (typeof input === "object" && input !== null && Object.entries(input).length) {
+  if (
+    typeof input === "object" &&
+    input !== null &&
+    Object.entries(input).length
+  ) {
     return true;
   }
-  throw "Nothing came back";
+  return false;
 }
 
 // -------------
@@ -137,11 +141,11 @@ const Exam = (): JSX.Element => {
     // -------------
 
     // async and await are keywords which make synchronous-looking code asynchronous.
-    // We use async when defining a function to signify that it returns a Promise. 
+    // We use async when defining a function to signify that it returns a Promise.
 
     try {
       const response: any = await fetchData();
-      
+
       if (checkData(response)) {
         setLoading(false);
         setResults(response);
@@ -185,20 +189,52 @@ const Loader = (): JSX.Element => {
   return <div>Loading...</div>;
 };
 
-const List = ({ items }: MyGroupType): JSX.Element => {
+const List = ({ items }: MyGroupType) => {
   return (
     <ul>
       {items instanceof Array &&
-        items.map((item: MyGroupType, index: number) => (
-          <li key={`item_${index}`}>
-            {item.children && "🔻"}
-            {item.name}
-            {item.children && checkData(item.children) && (
-              <List items={item.children} />
-            )}
-          </li>
+        items.map((item) => (
+          <ListItem
+            key={`item-${item.id}`}
+            item={item}
+            id={item.id}
+            name={item.name}
+            children={item.children}
+          />
         ))}
     </ul>
+  );
+};
+
+const ListItem = (props: {
+  item: any;
+  id: string;
+  children: any;
+  name: string;
+}): JSX.Element => {
+  const [toggle, setToggle] = useState<boolean>(false);
+
+  return (
+    <li key={`item_${props.id}`}>
+      {props.children && (
+        <button
+          className="border"
+          onClick={() => {
+            setToggle(toggle ? false : true);
+          }}
+        >
+          <div className={toggle ? "rotate-180" : ""}>🔻</div>
+        </button>
+      )}
+      {props.name}
+      {props.children && checkData(props.children) && (
+        <>
+          <div className={toggle ? "visible" : "hidden"}>
+            <List items={props.children} />
+          </div>
+        </>
+      )}
+    </li>
   );
 };
 
