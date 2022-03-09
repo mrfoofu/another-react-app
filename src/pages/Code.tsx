@@ -2,6 +2,7 @@ import { useContext } from "react";
 
 // Components
 import Exam from "../component/Functions/Exam";
+import GraphqlMe from "../component/Functions/Graphql";
 import Hooks from "../component/Functions/Hooks/Hooks";
 import { UserContext } from "../component/Functions/Hooks/UserContext";
 
@@ -17,6 +18,8 @@ const Code = () =>{
       <Exam />
       <h2 className="text-4xl py-3">useEffect</h2>
       <Hooks />
+      <h2 className="text-4xl py-3">GraphQl</h2>
+      <GraphqlMe />
     </>
   );
 }
