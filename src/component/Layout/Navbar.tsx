@@ -14,12 +14,24 @@ const resourcesItems: Props[] = [
     link: "/"
   },
   {
-    label: "Modules",
+    label: "Components",
     link: "/components"
   },
   {
-    label: "Code",
-    link: "/code"
+    label: "Exams",
+    link: "/exams"
+  },
+  {
+    label: "Hooks",
+    link: "/hooks"
+  },
+  {
+    label: "Graphql",
+    link: "/graphql"
+  },
+  {
+    label: "Redux",
+    link: "/redux"
   },
 ];
 

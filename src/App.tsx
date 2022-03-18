@@ -3,10 +3,16 @@ import Layout from "./component/Layout/Layout";
 import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 
-import Components from "./pages/Components";
-import Code from "./pages/Code";
+// Components
 import Navbar from "./component/Layout/Navbar";
+
+// Pages
 import Home from "./pages/Home";
+import Components from "./pages/Components";
+import Exams from "./pages/Exams";
+import Graphql from "./pages/Graphql";
+import ReactHooks from "./pages/ReactHooks";
+import Redux from "./pages/Redux";
 
 import {
   ApolloClient,
@@ -33,7 +39,10 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/components" element={<Components />} />
-            <Route path="/code" element={<Code />} />
+            <Route path="/exams" element={<Exams />} />
+            <Route path="/graphql" element={<Graphql />} />
+            <Route path="/hooks" element={<ReactHooks />} />
+            <Route path="/redux" element={<Redux />} />
           </Routes>
         </BrowserRouter>
       </Layout>

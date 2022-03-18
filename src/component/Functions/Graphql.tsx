@@ -52,7 +52,7 @@ const DogPhoto = ({ breed }: IProps) => {
     variables: { breed },
 
     // Specifies the interval (in milliseconds) at which the query polls for updated results.
-    // pollInterval: 10000,
+    pollInterval: 10000,
 
     // Used for first execution
     fetchPolicy: "network-only",   

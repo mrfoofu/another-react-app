@@ -12,7 +12,7 @@ const Components = () =>{
 
   return (
     <>
-      <h1 className="py-3 font-bold sm:py-4 md:py-5 text-5xl">Main</h1>
+      <h1 className="py-3 font-bold sm:py-4 md:py-5 text-5xl">Components</h1>
       <div>{JSON.stringify(data, null, 1)}</div>
       {/* Component */}
       <Heading
